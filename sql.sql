@@ -10,7 +10,7 @@ CREATE TABLE `article` (
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment="博文表" ;
 
-CREATE TABLE `user` (
+CREATE TABLE `blog_user`(
  `id` varchar(32) NOT NULL  COMMENT '用户ID',
  `ip` varchar(20) NULL COMMENT '用户IP',
  `name` varchar(20) NOT NULL COMMENT '用户名',
