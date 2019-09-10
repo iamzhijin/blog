@@ -2,6 +2,7 @@ package com.lzhijin.blog.service;
 
 import com.lzhijin.blog.entity.BlogUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lzhijin.blog.entity.params.LoginParams;
 
 /**
  * <p>
@@ -12,5 +13,4 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-09-05
  */
 public interface IBlogUserService extends IService<BlogUser> {
-
 }
