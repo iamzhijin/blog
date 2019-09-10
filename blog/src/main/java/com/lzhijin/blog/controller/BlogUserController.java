@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.lzhijin.blog.common.AbstractRestService;
 import com.lzhijin.blog.common.ResponseResult;
 import com.lzhijin.blog.entity.BlogUser;
+import com.lzhijin.blog.entity.dto.LoginDTO;
 import com.lzhijin.blog.entity.params.LoginParams;
 import com.lzhijin.blog.service.IBlogUserService;
 import com.lzhijin.blog.service.bll.BlogUserBLL;
@@ -41,12 +42,12 @@ public class BlogUserController extends AbstractRestService {
      * @since 2019-09-10
      */
     @PostMapping(value = "/register")
-    public ResponseResult register(@RequestBody LoginParams params){
+    public ResponseResult<String> register(@RequestBody LoginParams params){
         if(params==null || StringUtils.isEmpty(params.getPassword())){
             return this.buildIllegalParamResult();
         }
         try{
-            String userId = blogUserBLL.register(params);
+            return this.buildSuccessResult(blogUserBLL.register(params));
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -57,25 +58,20 @@ public class BlogUserController extends AbstractRestService {
      * 登录
      *
      * @param params 登录参数
-     * @return
+     * @return LoginDTO 登录结果
      * @author lzhijin
      * @since 2019-09-06
      */
     @PostMapping(value = "/login")
-    public ResponseResult login(LoginParams params){
-        if(params==null){
+    public ResponseResult<LoginDTO> login(LoginParams params){
+        if(params==null || params.getPhone()==null){
             return this.buildIllegalParamResult();
         }
-
-        BlogUser blogUser = new BlogUser();
-        blogUser.setId(UUIDUtil.getUUID());
-        blogUser.setName("admin");
-        blogUser.setPassword("admin");
-        // 验证密码
-        if(params.getPassword().equals(blogUser.getPassword())){
-            return this.buildSuccessResult(blogUserBLL.createToken(blogUser));
-        } else {
-            return this.buildErrorResult("密码错误");
+        try{
+            return this.buildSuccessResult(blogUserBLL.login(params));
+        } catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResult("登录失败：" + e.getMessage());
         }
     }
 

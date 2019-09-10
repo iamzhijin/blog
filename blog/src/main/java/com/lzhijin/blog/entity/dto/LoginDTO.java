@@ -1,6 +1,6 @@
 package com.lzhijin.blog.entity.dto;
 
-public class LoginDto {
+public class LoginDTO {
     /** 用户ID */
     private String userId;
 
@@ -9,9 +9,6 @@ public class LoginDto {
 
     /** 电话号码 */
     private String phone;
-
-    /** 密码 */
-    private String password;
 
     public String getUserId() {
         return userId;
@@ -37,11 +34,4 @@ public class LoginDto {
         this.phone = phone;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

@@ -58,7 +58,7 @@ public class BlogUser implements Serializable {
     /**
      * 用户手机号
      */
-    private Integer phone;
+    private String phone;
 
     /**
      * 用户昵称
@@ -121,13 +121,15 @@ public class BlogUser implements Serializable {
     public void setAge(Integer age) {
         this.age = age;
     }
-    public Integer getPhone() {
+
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
+
     public String getNickname() {
         return nickname;
     }

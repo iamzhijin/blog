@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lzhijin.blog.entity.BlogUser;
+import com.lzhijin.blog.entity.dto.LoginDTO;
 import com.lzhijin.blog.entity.params.LoginParams;
 import com.lzhijin.blog.service.IBlogUserService;
 import com.lzhijin.blog.util.MD5Util;
@@ -46,6 +47,33 @@ public class BlogUserBLL {
     }
 
     /**
+     * 登录
+     *
+     * @param params 登录参数
+     * @return BlogUser 用户详细信息
+     * @author lzhijin
+     * @since 2019-09-06
+     */
+    public LoginDTO login(LoginParams params) throws Exception{
+        QueryWrapper<BlogUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("phone", params.getPhone());
+        BlogUser blogUser = blogUserService.getOne(queryWrapper);
+        if(blogUser==null){
+            throw new Exception("用户不存在");
+        }
+        // 验证密码
+        if(params.getPassword().equals(blogUser.getPassword())){
+            LoginDTO loginDTO = new LoginDTO();
+            loginDTO.setPhone(params.getPhone());
+            loginDTO.setUserId(blogUser.getId());
+            loginDTO.setToken(createToken(blogUser));
+            return loginDTO;
+        } else {
+            throw new Exception("密码错误，请检查");
+        }
+    }
+
+    /**
      * 下发登录后的token
      *
      * @param blogUser 用户参数
@@ -66,7 +94,7 @@ public class BlogUserBLL {
                 .sign(Algorithm.HMAC256(blogUser.getPassword()));
     }
 
-    private Boolean checkPhone(Integer phone){
+    private Boolean checkPhone(String phone){
         QueryWrapper<BlogUser> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("PHONE", phone);
         BlogUser blogUser = blogUserService.getOne(queryWrapper);

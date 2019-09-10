@@ -2,16 +2,16 @@ package com.lzhijin.blog.entity.params;
 
 public class LoginParams {
     /** 电话号码 */
-    private Integer phone;
+    private String phone;
 
     /** 密码 */
     private String password;
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
