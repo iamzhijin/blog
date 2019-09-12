@@ -10,6 +10,9 @@ public class LoginDTO {
     /** 电话号码 */
     private String phone;
 
+    /** 用户姓名 */
+    private String name;
+
     public String getUserId() {
         return userId;
     }
@@ -34,4 +37,11 @@ public class LoginDTO {
         this.phone = phone;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

@@ -41,8 +41,8 @@ public class BlogUserController extends AbstractRestService {
      * @author lzhijin
      * @since 2019-09-10
      */
-    @PostMapping(value = "/register")
-    public ResponseResult<String> register(@RequestBody LoginParams params){
+    @PostMapping(value = "register")
+    public ResponseResult<String> register(LoginParams params){
         if(params==null || StringUtils.isEmpty(params.getPassword())){
             return this.buildIllegalParamResult();
         }
@@ -50,8 +50,8 @@ public class BlogUserController extends AbstractRestService {
             return this.buildSuccessResult(blogUserBLL.register(params));
         } catch(Exception e){
             e.printStackTrace();
+            return this.buildErrorResult("注册失败："+ e.getMessage());
         }
-        return null;
     }
 
     /**
@@ -66,6 +66,9 @@ public class BlogUserController extends AbstractRestService {
     public ResponseResult<LoginDTO> login(LoginParams params){
         if(params==null || params.getPhone()==null){
             return this.buildIllegalParamResult();
+        }
+        if(StringUtils.isEmpty(params.getPassword())){
+            return this.buildErrorResult("请输入密码");
         }
         try{
             return this.buildSuccessResult(blogUserBLL.login(params));

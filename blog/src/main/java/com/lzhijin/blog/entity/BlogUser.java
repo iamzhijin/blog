@@ -48,7 +48,7 @@ public class BlogUser implements Serializable {
     /**
      * 注册时间
      */
-    private LocalDateTime registTime;
+    private LocalDateTime registerTime;
 
     /**
      * 用户年龄
@@ -107,13 +107,15 @@ public class BlogUser implements Serializable {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
-    public LocalDateTime getRegistTime() {
-        return registTime;
+
+    public LocalDateTime getRegisterTime() {
+        return registerTime;
     }
 
-    public void setRegistTime(LocalDateTime registTime) {
-        this.registTime = registTime;
+    public void setRegisterTime(LocalDateTime registerTime) {
+        this.registerTime = registerTime;
     }
+
     public Integer getAge() {
         return age;
     }
@@ -147,7 +149,7 @@ public class BlogUser implements Serializable {
             ", password=" + password +
             ", email=" + email +
             ", photo=" + photo +
-            ", registTime=" + registTime +
+            ", registerTime=" + registerTime +
             ", age=" + age +
             ", phone=" + phone +
             ", nickname=" + nickname +

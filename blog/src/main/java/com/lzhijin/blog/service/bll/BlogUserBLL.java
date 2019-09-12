@@ -8,6 +8,7 @@ import com.lzhijin.blog.entity.dto.LoginDTO;
 import com.lzhijin.blog.entity.params.LoginParams;
 import com.lzhijin.blog.service.IBlogUserService;
 import com.lzhijin.blog.util.MD5Util;
+import com.lzhijin.blog.util.TokenUtil;
 import com.lzhijin.blog.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,9 +65,10 @@ public class BlogUserBLL {
         // 验证密码
         if(params.getPassword().equals(blogUser.getPassword())){
             LoginDTO loginDTO = new LoginDTO();
-            loginDTO.setPhone(params.getPhone());
+            loginDTO.setPhone(blogUser.getPhone());
             loginDTO.setUserId(blogUser.getId());
-            loginDTO.setToken(createToken(blogUser));
+            loginDTO.setName(blogUser.getName());
+            loginDTO.setToken(TokenUtil.createToken(blogUser));
             return loginDTO;
         } else {
             throw new Exception("密码错误，请检查");
@@ -74,29 +76,14 @@ public class BlogUserBLL {
     }
 
     /**
-     * 下发登录后的token
+     * 校验用户号码是否已注册
      *
-     * @param blogUser 用户参数
-     * @return token 令牌
+     * @param phone 手机号码
+     * @return true/false
      */
-    public String createToken(BlogUser blogUser){
-        Date start = new Date();
-        long currentTime = System.currentTimeMillis() + 60 * 60 * 1000;
-        Date end = new Date(currentTime);
-        Map<String, Object> headerMap = new HashMap<>();
-        headerMap.put("alg", "HS256");
-        headerMap.put("typ", "JWT");
-        return JWT.create()
-                .withHeader(headerMap)
-                .withAudience(blogUser.getId())  // 受众
-                .withIssuedAt(start)  // 签发时间
-                .withExpiresAt(end)  // 过期时间
-                .sign(Algorithm.HMAC256(blogUser.getPassword()));
-    }
-
     private Boolean checkPhone(String phone){
         QueryWrapper<BlogUser> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("PHONE", phone);
+        queryWrapper.eq("phone", phone);
         BlogUser blogUser = blogUserService.getOne(queryWrapper);
         return blogUser==null;
     }
