@@ -31,20 +31,14 @@ public class BlogUserBLL {
      * @author lzhijin
      * @since 2019-09-10
      */
-    public String register(LoginParams params) throws Exception{
+    public boolean register(BlogUser params) throws Exception{
         // 验证手机号码是否注册过
         if(!checkPhone(params.getPhone())){
             throw new Exception("手机号已注册！");
         }
-        BlogUser blogUser = new BlogUser();
         String UUID = UUIDUtil.getUUID();
-        blogUser.setId(UUID);
-        blogUser.setPhone(params.getPhone());
-        blogUser.setPassword(MD5Util.MD5(params.getPassword()));
-        if(blogUserService.save(blogUser)){
-            return UUID;
-        }
-        return null;
+        params.setId(UUID);
+        return blogUserService.save(params);
     }
 
     /**
@@ -73,6 +67,18 @@ public class BlogUserBLL {
         } else {
             throw new Exception("密码错误，请检查");
         }
+    }
+
+    /**
+     * 查询用户详情
+     *
+     * @param id 用户id
+     * @return BlogUser 用户类
+     * @author lzhijin
+     * @since 2019-09-20
+     */
+    public BlogUser getUserInfo(String id){
+        return blogUserService.getById(id);
     }
 
     /**

@@ -104,6 +104,10 @@ public class TokenUtil {
     }
 
     /**
+     * 根据token获取当前登录对象
+     */
+
+    /**
      * 从header中获取token
      * @return token
      */

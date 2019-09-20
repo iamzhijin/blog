@@ -4,12 +4,14 @@ package com.lzhijin.blog.controller;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.lzhijin.blog.common.AbstractRestService;
 import com.lzhijin.blog.common.ResponseResult;
+import com.lzhijin.blog.entity.BlogUser;
 import com.lzhijin.blog.entity.dto.LoginDTO;
 import com.lzhijin.blog.entity.params.LoginParams;
 import com.lzhijin.blog.service.bll.BlogUserBLL;
 import com.lzhijin.blog.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,8 +41,9 @@ public class BlogUserController extends AbstractRestService {
      * @since 2019-09-10
      */
     @PostMapping(value = "register")
-    public ResponseResult<String> register(LoginParams params){
-        if(params==null || StringUtils.isEmpty(params.getPassword())){
+    public ResponseResult<Boolean> register(BlogUser params){
+        if(params==null || StringUtils.isEmpty(params.getPassword()) ||
+                StringUtils.isEmpty(params.getPhone())){
             return this.buildIllegalParamResult();
         }
         try{
@@ -72,6 +75,27 @@ public class BlogUserController extends AbstractRestService {
         } catch(Exception e){
             e.printStackTrace();
             return this.buildErrorResult("登录失败：" + e.getMessage());
+        }
+    }
+
+    /**
+     * 查询用户详情
+     *
+     * @param id 用户id
+     * @return BlogUser 用户类
+     * @author lzhijin
+     * @since 2019-09-20
+     */
+    @PostMapping(value = "getUserInfo")
+    public ResponseResult<BlogUser> getUserInfo(String id){
+        if(StringUtils.isEmpty(id)){
+            return this.buildIllegalParamResult();
+        }
+        try{
+            return this.buildSuccessResult(blogUserBLL.getUserInfo(id));
+        } catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResult("查询用户信息失败");
         }
     }
 
