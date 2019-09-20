@@ -16,7 +16,12 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <java-jwt>3.4.0</java-jwt>
+        <jsonwebtoken>0.9.0</jsonwebtoken>
+        <alibaba.fastjson>1.2.47</alibaba.fastjson>
+        <apache.commons-lang3>3.7</apache.commons-lang3>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -54,11 +59,29 @@
             <version>8.0.16</version>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- JWT依赖包 -->
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
-            <version>3.4.0</version>
+            <version>${java-jwt}</version>
         </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jsonwebtoken}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${alibaba.fastjson}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache.commons-lang3}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

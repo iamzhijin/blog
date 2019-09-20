@@ -4,18 +4,13 @@ package com.lzhijin.blog.controller;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.lzhijin.blog.common.AbstractRestService;
 import com.lzhijin.blog.common.ResponseResult;
-import com.lzhijin.blog.entity.BlogUser;
 import com.lzhijin.blog.entity.dto.LoginDTO;
 import com.lzhijin.blog.entity.params.LoginParams;
-import com.lzhijin.blog.service.IBlogUserService;
 import com.lzhijin.blog.service.bll.BlogUserBLL;
-import com.lzhijin.blog.util.UUIDUtil;
+import com.lzhijin.blog.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,6 +27,8 @@ public class BlogUserController extends AbstractRestService {
 
     @Autowired
     BlogUserBLL blogUserBLL;
+    @Autowired
+    TokenUtil tokenUtil;
 
     /**
      * 用户注册

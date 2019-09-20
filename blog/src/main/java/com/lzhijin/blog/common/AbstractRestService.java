@@ -3,7 +3,7 @@ package com.lzhijin.blog.common;
 /**
  * 接口结果抽象类
  */
-public class AbstractRestService {
+public abstract class AbstractRestService {
 
     /**
      * 返回错误对象信息
@@ -40,6 +40,16 @@ public class AbstractRestService {
         ResponseResult<T> serviceResult = new ResponseResult<T>();
         serviceResult.setStatus(2);
         serviceResult.setMessage("未登录");
+        return serviceResult;
+    }
+
+    /**
+     * 创建会话过期的结果
+     */
+    protected  <T> ResponseResult<T> buildUnLoginResult(int code, String message) {
+        ResponseResult<T> serviceResult = new ResponseResult<T>();
+        serviceResult.setStatus(2);
+        serviceResult.setMessage(message);
         return serviceResult;
     }
 

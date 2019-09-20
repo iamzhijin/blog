@@ -1,7 +1,5 @@
 package com.lzhijin.blog.service.bll;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lzhijin.blog.entity.BlogUser;
 import com.lzhijin.blog.entity.dto.LoginDTO;
@@ -22,6 +20,8 @@ public class BlogUserBLL {
 
     @Autowired
     IBlogUserService blogUserService;
+    @Autowired
+    TokenUtil tokenUtil;
 
     /**
      * 用户注册
@@ -68,7 +68,7 @@ public class BlogUserBLL {
             loginDTO.setPhone(blogUser.getPhone());
             loginDTO.setUserId(blogUser.getId());
             loginDTO.setName(blogUser.getName());
-            loginDTO.setToken(TokenUtil.createToken(blogUser));
+            loginDTO.setToken(tokenUtil.createToken(blogUser));
             return loginDTO;
         } else {
             throw new Exception("密码错误，请检查");
