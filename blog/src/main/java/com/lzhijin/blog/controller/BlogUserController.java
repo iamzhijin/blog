@@ -7,11 +7,13 @@ import com.lzhijin.blog.common.ResponseResult;
 import com.lzhijin.blog.entity.BlogUser;
 import com.lzhijin.blog.entity.dto.LoginDTO;
 import com.lzhijin.blog.entity.params.LoginParams;
+import com.lzhijin.blog.entity.params.UpdatePasswordParams;
 import com.lzhijin.blog.service.bll.BlogUserBLL;
 import com.lzhijin.blog.util.TokenUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class BlogUserController extends AbstractRestService {
+
+    private static final Logger logger = LoggerFactory.getLogger(BlogUserController.class);
 
     @Autowired
     BlogUserBLL blogUserBLL;
@@ -50,6 +54,7 @@ public class BlogUserController extends AbstractRestService {
             return this.buildSuccessResult(blogUserBLL.register(params));
         } catch(Exception e){
             e.printStackTrace();
+            logger.error("注册失败：" + e.getMessage());
             return this.buildErrorResult("注册失败："+ e.getMessage());
         }
     }
@@ -74,6 +79,7 @@ public class BlogUserController extends AbstractRestService {
             return this.buildSuccessResult(blogUserBLL.login(params));
         } catch(Exception e){
             e.printStackTrace();
+            logger.error("登录失败：" + e.getMessage());
             return this.buildErrorResult("登录失败：" + e.getMessage());
         }
     }
@@ -95,7 +101,34 @@ public class BlogUserController extends AbstractRestService {
             return this.buildSuccessResult(blogUserBLL.getUserInfo(id));
         } catch(Exception e){
             e.printStackTrace();
+            logger.error("查询用户详情失败：" + e.getMessage());
             return this.buildErrorResult("查询用户信息失败");
+        }
+    }
+
+    /**
+     * 用户修改密码
+     *
+     * @param params 修改密码信息
+     * @return true/false
+     * @author lzhijin
+     * @since 2019-09-24
+     */
+    @PostMapping(value = "updatePassword")
+    public ResponseResult<Boolean> updatePassword(UpdatePasswordParams params){
+        if(StringUtils.isEmpty(params.getUserId())){
+            return this.buildIllegalParamResult();
+        }
+        try{
+            if(blogUserBLL.updatePassword(params)){
+                return this.buildSuccessResult(true);
+            } else {
+                return this.buildErrorResult("更新密码失败");
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+            logger.error("更新密码失败: " + e.getMessage());
+            return this.buildErrorResult("更新密码失败: " + e.getMessage());
         }
     }
 

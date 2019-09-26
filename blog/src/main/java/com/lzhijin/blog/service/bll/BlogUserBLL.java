@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lzhijin.blog.entity.BlogUser;
 import com.lzhijin.blog.entity.dto.LoginDTO;
 import com.lzhijin.blog.entity.params.LoginParams;
+import com.lzhijin.blog.entity.params.UpdatePasswordParams;
 import com.lzhijin.blog.service.IBlogUserService;
 import com.lzhijin.blog.util.MD5Util;
 import com.lzhijin.blog.util.TokenUtil;
@@ -79,6 +80,30 @@ public class BlogUserBLL {
      */
     public BlogUser getUserInfo(String id){
         return blogUserService.getById(id);
+    }
+
+    /**
+     * 用户修改密码
+     *
+     * @param params 修改密码信息
+     * @return true/false
+     * @author lzhijin
+     * @since 2019-09-24
+     */
+    public Boolean updatePassword(UpdatePasswordParams params) throws Exception{
+        BlogUser blogUser = blogUserService.getById(params.getUserId());
+        if(blogUser!=null){
+            if(params.getOldPassword().equals(blogUser.getPassword())){
+                BlogUser upUser = new BlogUser();
+                upUser.setId(params.getUserId());
+                upUser.setPassword(params.getNewPassword());
+                return blogUserService.updateById(upUser);
+            } else {
+                throw new Exception("旧密码错误");
+            }
+        } else{
+            throw new Exception("查无该用户");
+        }
     }
 
     /**

@@ -48,7 +48,8 @@ public class TokenUtil {
         headerMap.put("typ", "JWT");
         JwtBuilder builder = Jwts.builder().setHeader(headerMap)
                 .claim("userId", blogUser.getId())
-                .claim("userName", blogUser.getName())
+                .claim("name", blogUser.getName())
+                .claim("phone", blogUser.getPhone())
                 .signWith(signatureAlgorithm, signingKey);
         if(SecretConstant.EXPIRATION > 0){
             long expMillis = nowTimeMillis + SecretConstant.EXPIRATION;
@@ -73,7 +74,7 @@ public class TokenUtil {
     /**
      * 校验token
      *
-     * @return LoginDTO 用户登录信息响应类
+     * @return IsLoginDTO 用户登录J结果响应类
      */
     public IsLoginDTO isLogin(){
         String token = getTokenFromHeader();
@@ -104,8 +105,17 @@ public class TokenUtil {
     }
 
     /**
-     * 根据token获取当前登录对象
+     * 根据token获取当前登录对象（默认token正确）
      */
+    public LoginDTO getLoginDto(){
+        String token = getTokenFromHeader();
+        Claims claims = parseJWT(token);
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setUserId(claims.get("userId").toString());
+        loginDTO.setName(claims.get("name").toString());
+        loginDTO.setPhone(claims.get("phone").toString());
+        return loginDTO;
+    }
 
     /**
      * 从header中获取token

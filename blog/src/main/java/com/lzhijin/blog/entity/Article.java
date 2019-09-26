@@ -60,6 +60,9 @@ public class Article implements Serializable {
      */
     private Integer isPublish;
 
+    /** 是否删除 0-否 1-是 */
+    private Integer deletable;
+
     public String getId() {
         return id;
     }
@@ -123,6 +126,14 @@ public class Article implements Serializable {
 
     public void setIsPublish(Integer isPublish) {
         this.isPublish = isPublish;
+    }
+
+    public Integer getDeletable() {
+        return deletable;
+    }
+
+    public void setDeletable(Integer deletable) {
+        this.deletable = deletable;
     }
 
     @Override
