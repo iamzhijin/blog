@@ -11,6 +11,9 @@ public class ArticleParams {
     /** 是否发布 0-否 1-是 */
     private Integer isPublish;
 
+    /** 标签Id */
+    private String labelId;
+
     public String getTitle() {
         return title;
     }
@@ -33,5 +36,13 @@ public class ArticleParams {
 
     public void setIsPublish(Integer isPublish) {
         this.isPublish = isPublish;
+    }
+
+    public String getLabelId() {
+        return labelId;
+    }
+
+    public void setLabelId(String labelId) {
+        this.labelId = labelId;
     }
 }

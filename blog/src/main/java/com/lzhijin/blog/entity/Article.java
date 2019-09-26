@@ -63,6 +63,9 @@ public class Article implements Serializable {
     /** 是否删除 0-否 1-是 */
     private Integer deletable;
 
+    /** 标签ID */
+    private String labelId;
+
     public String getId() {
         return id;
     }
@@ -134,6 +137,14 @@ public class Article implements Serializable {
 
     public void setDeletable(Integer deletable) {
         this.deletable = deletable;
+    }
+
+    public String getLabelId() {
+        return labelId;
+    }
+
+    public void setLabelId(String labelId) {
+        this.labelId = labelId;
     }
 
     @Override

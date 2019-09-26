@@ -1,9 +1,12 @@
 package com.lzhijin.blog.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lzhijin.blog.common.AbstractRestService;
 import com.lzhijin.blog.common.ResponseResult;
 import com.lzhijin.blog.entity.Article;
+import com.lzhijin.blog.entity.dto.ArticleListDTO;
+import com.lzhijin.blog.entity.params.ArticleListParams;
 import com.lzhijin.blog.entity.params.ArticleParams;
 import com.lzhijin.blog.service.bll.ArticleBLL;
 import org.slf4j.Logger;
@@ -23,7 +26,7 @@ import org.springframework.stereotype.Controller;
  * @since 2019-09-23
  */
 @Controller
-@RequestMapping("/blog/article")
+@RequestMapping("/article")
 public class ArticleController extends AbstractRestService {
 
     private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
@@ -60,14 +63,26 @@ public class ArticleController extends AbstractRestService {
     /**
      * 博客列表查询
      *
-     * @param
-     * @return
+     * @param params 标签ID 分页参数
+     * @return ArticleListDTO 文章列表实体
      * @author lzhijin
-     * @since 2019-
+     * @since 2019-09-26
      */
     @PostMapping(value = "getArticleList")
-    public ResponseResult getArticleList(){
-        return null;
+    public ResponseResult<Page<ArticleListDTO>> getArticleList(ArticleListParams params){
+        if(params.getPageNum()  < 1){
+            params.setPageNum(1);
+        }
+        if(params.getPageSize() < 1){
+            params.setPageSize(10);
+        }
+        try{
+            return this.buildSuccessResult(articleBLL.getArticleList(params));
+        } catch(Exception e){
+            e.printStackTrace();
+            logger.error("查询博客列表失败: " + e.getMessage());
+            return this.buildErrorResult("查询博客列表失败");
+        }
     }
 
 }

@@ -2,4 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lzhijin.article.mapper.ArticleMapper">
 
+    <select id="getArticleList" parameterType="java.lang.String"
+            resultType="com.lzhijin.blog.entity.dto.ArticleListDTO">
+        select *
+        from article ar left join blog_user bu on ar.user_id=bu.id
+        left join label la on ar.label_id=la.id
+        where ar.isPublish=1 and deletable=0
+        <if test="labelId != null">ar.label_id = #{labelId}</if>
+    </select>
+
 </mapper>
