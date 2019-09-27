@@ -23,3 +23,10 @@ CREATE TABLE `blog_user` (
   `nickname` varchar(20) DEFAULT NULL COMMENT '用户昵称',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表'
+
+CREATE TABLE `label` (
+	`id` varchar(32) NOT NULL COMMENT '标签ID',
+    `label_name` varchar(32) NOT NULL COMMENT '标签名称',
+    `describe` varchar(64) default null comment '标签描述',
+    primary key(`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment="标签类型表";
