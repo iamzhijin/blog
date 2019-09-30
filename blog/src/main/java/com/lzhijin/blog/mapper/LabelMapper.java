@@ -2,6 +2,7 @@ package com.lzhijin.blog.mapper;
 
 import com.lzhijin.blog.entity.Label;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author lzhijin
  * @since 2019-09-26
  */
+@Mapper
 public interface LabelMapper extends BaseMapper<Label> {
 
 }

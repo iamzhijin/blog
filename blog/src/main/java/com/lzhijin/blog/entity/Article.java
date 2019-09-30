@@ -56,6 +56,11 @@ public class Article implements Serializable {
     private Long likeCount;
 
     /**
+     * 收藏数
+     */
+    private Long collectionCount;
+
+    /**
      * 是否发布 0-否 1-是
      */
     private Integer isPublish;
@@ -145,6 +150,14 @@ public class Article implements Serializable {
 
     public void setLabelId(String labelId) {
         this.labelId = labelId;
+    }
+
+    public Long getCollectionCount() {
+        return collectionCount;
+    }
+
+    public void setCollectionCount(Long collectionCount) {
+        this.collectionCount = collectionCount;
     }
 
     @Override

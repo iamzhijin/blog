@@ -58,7 +58,7 @@ public class MyGeratorConfig {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/src/main/java"); // 配置包路径？
+        gc.setOutputDir(projectPath + "/blog/src/main/java"); // 配置包路径？
         gc.setAuthor("lzhijin");
         gc.setOpen(false);
         mpg.setGlobalConfig(gc);
@@ -90,7 +90,7 @@ public class MyGeratorConfig {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输入文件名称
-                return projectPath + "/src/main/resources/mapper/"
+                return projectPath + "/blog/src/main/resources/mapper/"
                          + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });

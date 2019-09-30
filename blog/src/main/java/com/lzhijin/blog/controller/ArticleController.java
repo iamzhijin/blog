@@ -4,7 +4,6 @@ package com.lzhijin.blog.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lzhijin.blog.common.AbstractRestService;
 import com.lzhijin.blog.common.ResponseResult;
-import com.lzhijin.blog.entity.Article;
 import com.lzhijin.blog.entity.dto.ArticleListDTO;
 import com.lzhijin.blog.entity.params.ArticleListParams;
 import com.lzhijin.blog.entity.params.ArticleParams;
