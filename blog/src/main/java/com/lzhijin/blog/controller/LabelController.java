@@ -3,6 +3,7 @@ package com.lzhijin.blog.controller;
 
 import com.lzhijin.blog.common.AbstractRestService;
 import com.lzhijin.blog.common.ResponseResult;
+import com.lzhijin.blog.entity.Label;
 import com.lzhijin.blog.service.bll.LabelBLL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+
+import java.util.List;
 
 /**
  * <p>
@@ -36,13 +39,13 @@ public class LabelController extends AbstractRestService {
      * @since 2019-09-26
      */
     @GetMapping(value = "getAllLabel")
-    public ResponseResult getAllLabel(){
+    public ResponseResult<List<Label>> getAllLabel(){
         try{
             return this.buildSuccessResult(labelBLL.getAllLabel());
         } catch(Exception e){
             e.printStackTrace();
-            logger.error("查询博客列表失败: " + e.getMessage());
-            return this.buildErrorResult("查询博客列表失败");
+            logger.error("查询标签失败: " + e.getMessage());
+            return this.buildErrorResult("查询标签失败");
         }
     }
 

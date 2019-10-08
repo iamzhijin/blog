@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzhijin.article.mapper.ArticleLikeMapper">
+    <update id="increaseArticleLike" parameterType="com.lzhijin.blog.entity.ArticleLike">
+        update article
+        <set>
+            <if test="params.behavior==1">like_count = like_count+1</if>
+            <if test="params.behavior==1">collection_count = collection_count+1</if>
+        </set>
+        where id = params.articleId
+    </update>
+
+    <update id="decreaseArticleLike" parameterType="com.lzhijin.blog.entity.ArticleLike">
+        update article
+        <set>
+            <if test="params.behavior==1">like_count = like_count-1</if>
+            <if test="params.behavior==1">collection_count = collection_count-1</if>
+        </set>
+        where id = params.articleId
+    </update>
+</mapper>

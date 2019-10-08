@@ -36,7 +36,6 @@ public class ArticleLikeController extends AbstractRestService {
      * 文章点赞或收藏
      *
      * @param params 文章id 用户行为 behavior 1点赞 2收藏
-     * @return
      * @author lzhijin
      * @since 2019-09-30
      */
@@ -58,6 +57,35 @@ public class ArticleLikeController extends AbstractRestService {
             e.printStackTrace();
             logger.error(ArticleLikeEnum.getName(params.getBehavior()) + "文章失败: " + e.getMessage());
             return this.buildErrorResult(ArticleLikeEnum.getName(params.getBehavior()) + "文章失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 取消收藏、点赞
+     *
+     * @param params 文章ID 用户ID
+     * @return
+     * @author lzhijin
+     * @since 2019-10-08
+     */
+    @PostMapping(value = "cancelArticleLike")
+    public ResponseResult<Boolean> cancelArticleLike(ArticleLike params){
+        if(StringUtils.isEmpty(params.getArticleId())){
+            return this.buildIllegalParamResult();
+        }
+        if(params.getBehavior()==null){
+            return this.buildErrorResult("请选择取消点赞或收藏");
+        }
+        try{
+            if(articleLikeBLL.cancelArticleLike(params)){
+                return this.buildSuccessResult(true);
+            } else {
+                return this.buildErrorResult("取消" + ArticleLikeEnum.getName(params.getBehavior()) + "文章失败");
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+            logger.error("取消" + ArticleLikeEnum.getName(params.getBehavior()) + "文章失败: " + e.getMessage());
+            return this.buildErrorResult("取消" + ArticleLikeEnum.getName(params.getBehavior()) + "文章失败: " + e.getMessage());
         }
     }
 
